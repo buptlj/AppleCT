@@ -48,7 +48,7 @@ class RecModel(object):
         mat[mat >= self.trunc_max] = self.trunc_max
         return mat
 
-    def pred_res(self, inp_data):
+    def pred(self, inp_data):
         # inp_data: the result of fbp, range 0-1
         shape_ = inp_data.shape[-1]
         with torch.no_grad():

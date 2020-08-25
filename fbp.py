@@ -5,7 +5,7 @@ from PIL import Image
 
 class FBP(object):
 
-    def __init__(self, thetas):
+    def __init__(self, thetas=np.linspace(88.22, -91.78, 50, endpoint=False)):
         self.thetas = thetas
 
     def filter_projection(self, sinogram):  ##ramp filter
