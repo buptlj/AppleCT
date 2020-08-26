@@ -1,84 +1,45 @@
 import argparse
-import utility
+from . import utility
 import numpy as np
+from easydict import EasyDict as edict
 
-parser = argparse.ArgumentParser(description='DRN')
 
-parser.add_argument('--n_threads', type=int, default=4,
-                    help='number of threads for data loading')
-parser.add_argument('--cpu', default='False', action='store_true',
-                    help='use cpu only')
-parser.add_argument('--n_GPUs', type=int, default=1,
-                    help='number of GPUs')
-parser.add_argument('--device_id', type=str, default='cuda:0', help='number of GPUs')
-parser.add_argument('--seed', type=int, default=1,
-                    help='random seed')
-parser.add_argument('--data_dir', type=str, default='data_path',
-                    help='dataset directory')
-parser.add_argument('--data_test_dir', type=str, default='data_path', help='test data dir')
-parser.add_argument('--data_train', type=str, default='AppleCT',
-                    help='train dataset name')
-parser.add_argument('--data_test', type=str, default='AppleCT',
-                    help='test dataset name')
-parser.add_argument('--data_range', type=str, default='1-800/801-810',
-                    help='train/test data range')
-parser.add_argument('--scale', type=int, default=2,
-                    help='super resolution scale')
-parser.add_argument('--patch_size', type=int, default=48,
-                    help='output patch size')
-parser.add_argument('--rgb_range', type=int, default=1,
-                    help='maximum value of RGB')
-parser.add_argument('--n_colors', type=int, default=1,
-                    help='number of color channels to use')
-parser.add_argument('--no_augment', action='store_true',
-                    help='do not use data augmentation')
-parser.add_argument('--model', default='DRN-L', help='model name: DRN-S | DRN-L', required=True)
-parser.add_argument('--pre_train', type=str, default='.',
-                    help='pre-trained model directory')
-parser.add_argument('--pre_train_dual', type=str, default='.',
-                    help='pre-trained dual model directory')
-parser.add_argument('--n_blocks', type=int, default=30,
-                    help='number of residual blocks, 16|30|40|80')
-parser.add_argument('--n_feats', type=int, default=16,
-                    help='number of feature maps')
-parser.add_argument('--negval', type=float, default=0.2, 
-                    help='Negative value parameter for Leaky ReLU')
-parser.add_argument('--test_every', type=int, default=1000,
-                    help='do test per every N batches')
-parser.add_argument('--epochs', type=int, default=1000,
-                    help='number of epochs to train')
-parser.add_argument('--batch_size', type=int, default=32,
-                    help='input batch size for training')
-parser.add_argument('--self_ensemble', action='store_true',
-                    help='use self-ensemble method for test')
-parser.add_argument('--test_only', default='True', action='store_true',
-                    help='set this option to test the model')
-parser.add_argument('--lr', type=float, default=1e-4, 
-                    help='learning rate')
-parser.add_argument('--eta_min', type=float, default=1e-7,
-                    help='eta_min lr')
-parser.add_argument('--beta1', type=float, default=0.9,
-                    help='ADAM beta1')
-parser.add_argument('--beta2', type=float, default=0.999,
-                    help='ADAM beta2')
-parser.add_argument('--epsilon', type=float, default=1e-8,
-                    help='ADAM epsilon for numerical stability')
-parser.add_argument('--weight_decay', type=float, default=0,
-                    help='weight decay')
-parser.add_argument('--loss', type=str, default='1*L1',
-                    help='loss function configuration, L1|MSE')
-parser.add_argument('--skip_threshold', type=float, default='1e6',
-                    help='skipping batch that has large error')
-parser.add_argument('--dual_weight', type=float, default=0.1,
-                    help='the weight of dual loss')
-parser.add_argument('--save', type=str, default='./experiment/test/',
-                    help='file name to save')
-parser.add_argument('--print_every', type=int, default=100,
-                    help='how many batches to wait before logging training status')
-parser.add_argument('--save_results', action='store_true',
-                    help='save output results')
+args = edict()
+args.n_threads = 4
+args.cpu = False
+args.n_GPUs = 1
+args.seed = 1
+args.data_train = 'AppleCT'
+args.data_test = 'AppleCT'
+args.scale = 2
+args.patch_size = 48
+args.rgb_range = 1
+args.n_colors = 1
+args.no_augment = True
+args.model = 'DRN-L'
+args.pre_train = '.'
+args.pre_train_dual = '.'
+args.n_blocks = 30
+args.n_feats = 16
+args.negval = 0.2
+args.test_every = 1000
+args.epochs = 100
+args.batch_size = 32
+args.self_ensemble = False
+args.test_only = True
+args.lr = 1e-4
+args.eta_min = 1e-7
+args.beta1 = 0.9
+args.beta2 = 0.999
+args.epsilon = 1e-8
+args.weight_decay = 0
+args.loss = '1*L1'
+args.skip_threshold = 1e6
+args.dual_weight = 0.1
+args.save = './experiment/test/'
+args.print_every = 100
+args.save_results = False
 
-args = parser.parse_args()
 
 utility.init_model(args)
 

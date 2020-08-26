@@ -2,6 +2,8 @@ import numpy as np
 from scipy.fftpack import fft, fftshift, ifft
 from PIL import Image
 
+from tools import norm_data
+
 
 class FBP(object):
 
@@ -45,9 +47,12 @@ class FBP(object):
         return np.flipud(recon_img)
 
     def fbp_res(self, prj_img):
+        ih = prj_img.shape[0]
+        self.thetas = np.linspace(88.22, -91.78, ih, endpoint=False)
         filted = self.filter_projection(prj_img)
         # Back project the convolved sinogram 
         reconstruction = self.back_projection(filted)
         reconstruction = reconstruction[202:1174, 202:1174]
+        reconstruction = norm_data(reconstruction)
         return reconstruction
 

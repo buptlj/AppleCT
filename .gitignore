@@ -1,6 +1,8 @@
 
 __pycache__/
 *.jpg
+*.npy
+*.tif
 *.pyc
 ckpt/
 data_list/

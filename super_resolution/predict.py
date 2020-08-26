@@ -1,17 +1,19 @@
 import torch
-import model
-from option import args
-from checkpoint import Checkpoint
-import utility
+from .model import Model
+from .option import args
+from .checkpoint import Checkpoint
+from .utility import set_seed
 
 
 class SRModel(object):
 
-    def __init__(self):
+    def __init__(self, device):
         #args.pre_train = model_path
-        utility.set_seed(args.seed)
+        args.pre_train = 'super_resolution/ckpt/model_best.pth'
+        args.device_id = device
+        set_seed(args.seed)
         checkpoint = Checkpoint(args)
-        self.drn_model = model.Model(args, checkpoint)
+        self.drn_model = Model(args, checkpoint)
         self.drn_model.eval()
 
     def pred(self, inp_data):

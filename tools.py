@@ -42,6 +42,16 @@ def get_data(data_path, norm=0):
 
 
 def save_data(save_dir, data_name, data):
-    save_path = os.path.join(save_dir, data_name)
+    save_path = os.path.join(save_dir, data_name + '.jpg')
     cv2.imwrite(save_path, data)
+
+
+def norm_data(data):
+    min_v = data.min()
+    max_v = data.max()
+    data = (data - min_v) / (max_v - min_v)
+    return data
+
+
+
 

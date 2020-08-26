@@ -2,8 +2,8 @@ import os
 import math
 import torch
 import torch.nn as nn
-from model.common import DownBlock
-import model.drn
+from .common import DownBlock
+from .drn import make_model
 
 
 def dataparallel(model, gpu_list):
@@ -31,7 +31,7 @@ class Model(nn.Module):
         self.device = torch.device('cpu' if opt.cpu else opt.device_id)
         self.n_GPUs = opt.n_GPUs
 
-        self.model = drn.make_model(opt).to(self.device)
+        self.model = make_model(opt).to(self.device)
         self.dual_models = []
         for _ in self.opt.scale:
             dual_model = DownBlock(opt, 2).to(self.device)

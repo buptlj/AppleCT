@@ -1,39 +1,24 @@
 import os
 import torch
-import argparse
 
-from networks import WGAN_VGG, WGAN_VGG_generator
+from .networks import WGAN_VGG, WGAN_VGG_generator
 
 
-def get_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--data_path', type=str, default='./data/')
-    parser.add_argument('--model_path', type=str, default='./save/')
-    parser.add_argument('--save_path', type=str, default='')
-    parser.add_argument('--norm_range_min', type=float, default=0.0)
-    parser.add_argument('--norm_range_max', type=float, default=255.0)
-    parser.add_argument('--trunc_min', type=float, default=0.0)
-    parser.add_argument('--trunc_max', type=float, default=255.0)
-    parser.add_argument('--device', type=str, default='cuda:0')
-    args = parser.parse_args()
-    print(args)
-    return args
 
 class RecModel(object):
 
-    def __init__(self):
-        args = get_args()
-        if args.device:
-            self.device = torch.device(args.device)
+    def __init__(self, device):
+        if device:
+            self.device = torch.device(device)
         else:
             self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-        self.norm_range_min = args.norm_range_min
-        self.norm_range_max = args.norm_range_max
-        self.trunc_min = args.trunc_min
-        self.trunc_max = args.trunc_max
+        self.norm_range_min = 0.0
+        self.norm_range_max = 255.0
+        self.trunc_min = 0.0
+        self.trunc_max = 255.0
 
-        self.model_path = args.model_path
+        self.model_path = 'wgan_vgg/ckpt/WGANVGG_52000iter.ckpt'
         self.model = WGAN_VGG(device=self.device)
         self.model.to(self.device)
         self.model.eval()

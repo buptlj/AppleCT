@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from model import common
+from . import common
 
 
 def make_model(opt):
