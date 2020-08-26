@@ -41,7 +41,9 @@ def main():
 
     for inp_path in tqdm(inp_list):
         inp_data = get_data(inp_path, norm=1.0)
-        #inp_data = inp_data[::2]
+        if inp_data.shape[0] == 50:
+            # 25 projections
+            inp_data = inp_data[::2]
         inp_data = torch.from_numpy(inp_data)
         inp_data = inp_data.unsqueeze(0).unsqueeze(0).to(args.device)
         if args.data_type != 'noisefree':
