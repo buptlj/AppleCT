@@ -15,7 +15,7 @@ class DenoiseModel(object):
         if data_type == 'gaussian':
             model_path = 'denoise/ckpt/gaussian_model_best.pth'
         elif data_type == 'scattering':
-            model_path = 'denoise/ckpt/scattering_model_best.pth'
+            model_path = 'denoise/ckpt/gaussian_model_best.pth'
         else:
             model_path = ''
             print('wrong data type!')
