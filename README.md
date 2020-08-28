@@ -9,4 +9,8 @@ The data_type should be chosen from ['noisefree', 'gaussian', 'scattering'].
 
 ## 2.Defect detection  
 
+```
+python main.py --data_dir test/ --save_dir ./save
+```
+The input data is the reconstructed CT image, and the result is a mask as the ground truth.
 
