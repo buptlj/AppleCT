@@ -7,9 +7,12 @@ from .utility import set_seed
 
 class SRModel(object):
 
-    def __init__(self, device):
+    def __init__(self, data_type, device):
         #args.pre_train = model_path
-        args.pre_train = 'super_resolution/ckpt/model_best.pth'
+        if data_type == 'scattering':
+            args.pre_train = 'super_resolution/ckpt/model_best.pth'
+        else:
+            args.pre_train = 'super_resolution/ckpt/model_best.pth'
         args.device_id = device
         set_seed(args.seed)
         checkpoint = Checkpoint(args)

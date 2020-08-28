@@ -32,7 +32,7 @@ def main():
         os.makedirs(args.save_dir)
     inp_list = get_file_list(args.data_dir, suffix=['tif', 'npy'])
     print('total input data: {}'.format(len(inp_list)))
-    sr_model = SRModel(args.device)
+    sr_model = SRModel(args.data_type, args.device)
     rec_model = RecModel(args.device)
     if args.data_type != 'noisefree':
         denoise_model = DenoiseModel(args.data_type, args.device)

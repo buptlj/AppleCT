@@ -12,7 +12,13 @@ class DenoiseModel(object):
         self.data_type = data_type
         self.device = device
         self.model = BRDNet()
-        model_path = 'denoise/ckpt/model_best.pth'
+        if data_type == 'gaussian':
+            model_path = 'denoise/ckpt/gaussian_model_best.pth'
+        elif data_type == 'scattering':
+            model_path = 'denoise/ckpt/scattering_model_best.pth'
+        else:
+            model_path = ''
+            print('wrong data type!')
         self.model.load_state_dict(torch.load(model_path))
         self.model.to(self.device)
         self.model.eval()
